@@ -6,6 +6,7 @@ import com.unisul.here.service.RegistroPresencaService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/presenca")
 public class RegistroPresencaController {
 
