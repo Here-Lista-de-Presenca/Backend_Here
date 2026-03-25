@@ -1,6 +1,8 @@
 package com.unisul.here.service;
 
+import com.unisul.here.model.CadastroUsuario;
 import com.unisul.here.model.RegistroPresenca;
+import com.unisul.here.repository.CadastroUsuarioRepository;
 import com.unisul.here.repository.RegistroPresencaRepository;
 import org.springframework.stereotype.Service;
 
@@ -10,13 +12,16 @@ import java.time.LocalDateTime;
 @Service
 public class RegistroPresencaService {
 
-    private final RegistroPresencaRepository repository;
+    private final RegistroPresencaRepository presencaRepository;
+    private final CadastroUsuarioRepository usuarioRepository;
 
-    public RegistroPresencaService(RegistroPresencaRepository repository) {
-        this.repository = repository;
+    public RegistroPresencaService(RegistroPresencaRepository presencaRepository,
+                                   CadastroUsuarioRepository usuarioRepository) {
+        this.presencaRepository = presencaRepository;
+        this.usuarioRepository = usuarioRepository;
     }
 
-    public RegistroPresenca registrarPresenca() {
+    public RegistroPresenca registrarPresenca(Long usuarioId) {
 
         LocalTime agora = LocalTime.now();
 
@@ -31,9 +36,13 @@ public class RegistroPresencaService {
             throw new RuntimeException("Tempo de registro encerrado.");
         }
 
+        CadastroUsuario usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
         RegistroPresenca registro = new RegistroPresenca();
         registro.setHoraRegistro(LocalDateTime.now());
+        registro.setUsuario(usuario);
 
-        return repository.save(registro);
+        return presencaRepository.save(registro);
     }
 }

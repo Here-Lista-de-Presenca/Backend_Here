@@ -16,8 +16,8 @@ public class RegistroPresencaController {
         this.service = service;
     }
 
-    @PostMapping("/registrar")
-    public RegistroPresenca registrarPresenca() {
-        return service.registrarPresenca();
+    @PostMapping("/registrar/{usuarioId}")
+    public RegistroPresenca registrarPresenca(@PathVariable Long usuarioId) {
+        return service.registrarPresenca(usuarioId);
     }
 }

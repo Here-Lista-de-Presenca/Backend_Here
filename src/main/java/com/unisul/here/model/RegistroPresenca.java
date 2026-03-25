@@ -1,10 +1,19 @@
 package com.unisul.here.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "registro_presenca")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class RegistroPresenca {
 
     @Id
@@ -14,21 +23,7 @@ public class RegistroPresenca {
     @Column(name = "hora_registro")
     private LocalDateTime horaRegistro;
 
-    public RegistroPresenca() {}
-
-    public RegistroPresenca(LocalDateTime horaRegistro) {
-        this.horaRegistro = horaRegistro;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public LocalDateTime getHoraRegistro() {
-        return horaRegistro;
-    }
-
-    public void setHoraRegistro(LocalDateTime horaRegistro) {
-        this.horaRegistro = horaRegistro;
-    }
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private CadastroUsuario usuario;
 }
