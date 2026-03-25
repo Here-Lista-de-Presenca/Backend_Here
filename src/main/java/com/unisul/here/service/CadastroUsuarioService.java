@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class CadastroUsuarioService {
 
-    private final CadastroUsuarioRepository repository2;
+    private final CadastroUsuarioRepository usuarioRepository;
 
-    public CadastroUsuarioService(CadastroUsuarioRepository repository) {
-        this.repository2 = repository;
+    public CadastroUsuarioService(CadastroUsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
     }
 
     public CadastroUsuario salvar(CadastroUsuario user) {
@@ -19,6 +19,17 @@ public class CadastroUsuarioService {
             throw new RuntimeException("Email inválido");
         }
 
-        return repository2.save(user);
+        return usuarioRepository.save(user);
+    }
+
+    public CadastroUsuario login(String email, String senha) {
+        CadastroUsuario user = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Email não encontrado"));
+
+        if (!user.getPassword().equals(senha)) {
+            throw new RuntimeException("Senha incorreta");
+        }
+
+        return user;
     }
 }

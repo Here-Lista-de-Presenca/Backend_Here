@@ -19,4 +19,10 @@ public class CadastroUsuarioController {
         CadastroUsuario savedUser = service.salvar(user);
         return ResponseEntity.ok(savedUser);
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<CadastroUsuario> login(@RequestBody CadastroUsuario usuario) {
+        CadastroUsuario usuarioLogado = service.login(usuario.getEmail(), usuario.getPassword());
+        return ResponseEntity.ok(usuarioLogado);
+    }
 }
