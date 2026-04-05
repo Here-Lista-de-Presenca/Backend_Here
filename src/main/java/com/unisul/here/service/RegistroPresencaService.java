@@ -21,9 +21,8 @@ public class RegistroPresencaService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public RegistroPresenca registrarPresenca(Long usuarioId) {
-
-        LocalTime agora = LocalTime.now();
+    public RegistroPresenca registrarPresenca(Long usuarioId, LocalDateTime dataHoraRegistro) {
+        LocalTime agora = dataHoraRegistro.toLocalTime();
 
         LocalTime inicioPermitido = LocalTime.of(19, 50);
         LocalTime limiteRegistro = LocalTime.of(21, 0);
@@ -40,7 +39,7 @@ public class RegistroPresencaService {
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
         RegistroPresenca registro = new RegistroPresenca();
-        registro.setHoraRegistro(LocalDateTime.now());
+        registro.setHoraRegistro(dataHoraRegistro);
         registro.setUsuario(usuario);
 
         return presencaRepository.save(registro);
