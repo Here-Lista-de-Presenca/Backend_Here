@@ -5,6 +5,7 @@ import com.unisul.here.model.RegistroPresenca;
 import com.unisul.here.repository.CadastroUsuarioRepository;
 import com.unisul.here.repository.RegistroPresencaRepository;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 import java.time.LocalTime;
 import java.time.LocalDateTime;
@@ -39,6 +40,10 @@ public class RegistroPresencaService {
         registro.setUsuario(usuario);
 
         return presencaRepository.save(registro);
+    }
+
+    public List<RegistroPresenca> listarPorUsuario(Long usuarioId) {
+        return presencaRepository.findByUsuarioId(usuarioId);
     }
 
     private void ValidarHoraRegistro(LocalDateTime dataHoraRegistro){
