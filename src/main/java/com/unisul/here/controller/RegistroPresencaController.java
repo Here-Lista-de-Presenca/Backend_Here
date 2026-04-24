@@ -30,4 +30,10 @@ public class RegistroPresencaController {
         RegistroPresenca registro = service.registrarPresenca(id, dataParaRegistro, loc.latUser(), loc.lonUser());
         return ResponseEntity.ok(registro);
     }
+
+    @GetMapping("/usuario/{usuarioId}")
+    public ResponseEntity<?> listarPorUsuario(@PathVariable Long usuarioId) {
+        return ResponseEntity.ok(service.listarPorUsuario(usuarioId));
+    }
 }
+
