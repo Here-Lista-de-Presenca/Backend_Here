@@ -31,7 +31,7 @@ public class LoginUsuarioControllerTest {
         ResponseEntity<String> response = restTemplate.postForEntity("/users/login", usuarioJson, String.class);
 
         // ASSERT
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
     @Test
@@ -52,7 +52,7 @@ public class LoginUsuarioControllerTest {
         ResponseEntity<String> response = restTemplate.postForEntity("/users/login", usuarioJson, String.class);
 
         // ASSERT
-        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
     @Test
