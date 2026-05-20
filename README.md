@@ -29,9 +29,29 @@ O sistema aplica regras automáticas para controle de presença:
 - Spring Data JPA
 - H2 Database
 - JUnit 5
-- TestRestTemplate
 - Maven
 - Banco de Dados (MySQL)
+
+## 🔄 Workflow de Versionamento
+
+O projeto segue um fluxo de trabalho baseado em branches para garantir organização e colaboração em equipe.
+
+- `main`: contém a versão estável do sistema
+- `dev`: branch principal de desenvolvimento e integração
+- `feature/*`: branches utilizadas para desenvolvimento de novas funcionalidades
+
+O desenvolvimento é feito em branches de feature, que posteriormente são integradas à branch `dev` através de Pull Requests (PRs), com revisão por outros integrantes da equipe.
+
+## 📝 Padrão de Commits
+
+O projeto utiliza o padrão Conventional Commits para padronizar as mensagens de commit.
+
+Exemplos:
+- `feat:` nova funcionalidade
+- `fix:` correção de bugs
+- `docs:` alterações na documentação
+- `test:` adição ou modificação de testes
+- `ci:` alterações em integração contínua
 
 ## 📂 Estrutura do Projeto
 
