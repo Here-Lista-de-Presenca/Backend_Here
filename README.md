@@ -1,76 +1,91 @@
 # 📚 Sistema de Registro de Presença - Backend
 
-API REST desenvolvida em Java com Spring Boot para gerenciamento de presença de alunos, com regras de horário automatizadas.
+API REST desenvolvida em Java com Spring Boot para gerenciamento de presença de alunos, com regras automatizadas de horário e localização.
 
 ## 📌 Sobre o Projeto
 
-O backend é responsável por toda a lógica de negócio do sistema de presença, incluindo validações de horário e persistência dos dados.
+Este backend é responsável por toda a lógica de negócio de um sistema de registro de presença, permitindo:
 
-## ⏰ Regras de Negócio
+- Cadastro de usuários
+- Autenticação (login)
+- Registro de presença com validações de horário e localização
+- Consulta de presenças por usuário
 
-- Aula inicia às **19:00**
-- Presença liberada às **19:50**
-- Presença encerrada às **21:00**
+O sistema aplica regras para garantir que a presença só seja registrada dentro de um intervalo de tempo permitido e em um raio geográfico válido.
 
-✔ O registro só é permitido entre **19:50 e 21:00**
+## 🧠 Regras de Negócio
 
-## 🏗️ Arquitetura
+O sistema aplica regras automáticas para controle de presença:
 
-O projeto segue arquitetura em camadas:
-
-Controller → Service → Repository → Model
-
-
-## 📂 Estrutura do Projeto
-
-src/main/java/com/exemplo/presenca
-
-controller/
-service/
-repository/
-model/
-
+- ⏰ Bloqueio antes das **19:50** 
+- ⏰ Bloqueio após **21:00** 
+- 📍 Registro permitido apenas dentro do raio de 100 metros
+- 🕒 Registro automático com o horário atual do sistema
 
 ## ⚙️ Tecnologias Utilizadas
 
 - Java 21
 - Spring Boot
 - Spring Data JPA
+- H2 Database
+- JUnit 5
+- TestRestTemplate
 - Maven
 - Banco de Dados (MySQL)
-- REST API
 
-## 📊 Modelo de Dados
+## 📂 Estrutura do Projeto
 
-### RegistroPresenca
-
-| Campo         | Tipo            |
-|--------------|----------------|
-| id           | Long           |
-| horaRegistro | LocalDateTime  |
+```bash
+src/main/java/com/unisul/presenca
+├── controller/
+├── service/
+├── repository/
+└── model/
+```
 
 ## 🔗 Endpoints
 
-## Registrar Presença
+### 👤 Usuários
 
-POST /presenca/registrar
+- `POST /users` → Cadastro de usuário
+- `POST /users/login` → Login de usuário
 
-## Exemplo de resposta
+### 📍 Presença
 
-```json
-{
-  "id": 1,
-  "horaRegistro": "2026-03-16T19:55:12"
-}
-```
+- `POST /presenca/registrar/{userId}` → Registra presença
+- `GET /presenca/usuario/{userId}` → Lista presenças por usuário
 
-## 🧠 Regras Implementadas
+## 🧪 Testes Automatizados
 
-- Bloqueio antes das 19:50
-- Bloqueio após 21:00
-- Registro automático do horário atual
-- Persistência no banco de dados
+O projeto conta com testes de integração utilizando JUnit 5 e Spring Boot Test, simulando requisições HTTP reais na API com TestRestTemplate.
 
+## 👤 Testes de Usuário
+ 
+ ✔️ Cadastro de usuário
+
+- Cadastro com sucesso usando email válido
+- Erro ao utilizar email inválido
+
+✔️ Login de usuário
+
+- Login realizado com sucesso
+- Erro quando:
+  - Email não cadastrado
+  - Senha inválida
+  - Email inválido
+
+## 📍 Testes de Registro de Presença
+
+### ✔️ Cenário de sucesso
+- Registro permitido quando:
+  - Usuário existe
+  - Está dentro do horário permitido
+  - Está dentro da localização válida
+
+### ❌ Regras de validação
+- Não permite registro antes do horário liberado
+- Não permite registro após o horário encerrado
+- Não permite registro fora do raio de 100 metros
 
 ## 👥 Equipe
 
@@ -79,9 +94,6 @@ POST /presenca/registrar
 - Mauricio Batista Gabriel
 - Muriel Demonti de Souza
 
-
 ## 🎯 Objetivo
-Automatizar e otimizar o controle de presença em sala de aula.
 
-
-
+Automatizar e otimizar o controle de presença em sala de aula por meio de uma API com regras de validação de horário e localização.
