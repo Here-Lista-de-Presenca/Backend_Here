@@ -31,6 +31,7 @@ O sistema aplica regras automáticas para controle de presença:
 - JUnit 5
 - TestRestTemplate
 - Maven
+- Banco de Dados (MySQL)
 
 ## 📂 Estrutura do Projeto
 
