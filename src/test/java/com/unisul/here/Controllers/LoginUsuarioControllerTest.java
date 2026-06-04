@@ -1,6 +1,8 @@
 package com.unisul.here.Controllers;
 
 import com.unisul.here.model.CadastroUsuario;
+import com.unisul.here.repository.CadastroUsuarioRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,14 @@ public class LoginUsuarioControllerTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
+
+    @Autowired
+    private CadastroUsuarioRepository cadastroUsuarioRepository;
+
+    @BeforeEach
+    public void setUp() {
+        cadastroUsuarioRepository.deleteAll();
+    }
 
     @Test
     @DisplayName("Cenário Erro: Login com email não cadastrado")
