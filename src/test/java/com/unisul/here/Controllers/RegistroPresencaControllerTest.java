@@ -3,6 +3,9 @@ package com.unisul.here.Controllers;
 import com.unisul.here.dto.LocalizacaoDTO;
 import com.unisul.here.model.CadastroUsuario;
 import com.unisul.here.model.RegistroPresenca;
+import com.unisul.here.repository.CadastroUsuarioRepository;
+import com.unisul.here.repository.RegistroPresencaRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,18 @@ public class RegistroPresencaControllerTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
+
+    @Autowired
+    private RegistroPresencaRepository  registroPresencaRepository;
+
+    @Autowired
+    private CadastroUsuarioRepository cadastroUsuarioRepository;
+
+    @BeforeEach
+    public void setUp() {
+        registroPresencaRepository.deleteAll();
+        cadastroUsuarioRepository.deleteAll();
+    }
 
     private final double LAT_VALIDA = -27.5935;
     private final double LON_VALIDA = -48.5528;
