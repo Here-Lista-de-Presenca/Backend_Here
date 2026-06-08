@@ -5,6 +5,8 @@ import com.unisul.here.model.RegistroPresenca;
 import com.unisul.here.repository.CadastroUsuarioRepository;
 import com.unisul.here.repository.RegistroPresencaRepository;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.util.List;
 
 import java.time.LocalTime;
@@ -28,6 +30,8 @@ public class RegistroPresencaService {
     }
 
     public RegistroPresenca registrarPresenca(Long usuarioId, LocalDateTime dataHoraRegistro, double latUser, double lonUser) {
+        validarPresencaJaRegistrada(usuarioId, dataHoraRegistro.toLocalDate());
+
         ValidarHoraRegistro(dataHoraRegistro);
 
         ValidarLocalizacaoUsuario(latUser, lonUser);
@@ -44,6 +48,17 @@ public class RegistroPresencaService {
 
     public List<RegistroPresenca> listarPorUsuario(Long usuarioId) {
         return presencaRepository.findByUsuarioId(usuarioId);
+    }
+
+    private void validarPresencaJaRegistrada(Long usuarioId, LocalDate dataRegistro) {
+        LocalDateTime inicioDia = dataRegistro.atStartOfDay();
+        LocalDateTime fimDia = dataRegistro.atTime(LocalTime.MAX);
+
+        boolean jaRegistrou = presencaRepository.existsByUsuarioIdAndHoraRegistroBetween(usuarioId, inicioDia, fimDia);
+
+        if (jaRegistrou) {
+            throw new RuntimeException("Presença já registrada.");
+        }
     }
 
     private void ValidarHoraRegistro(LocalDateTime dataHoraRegistro){
